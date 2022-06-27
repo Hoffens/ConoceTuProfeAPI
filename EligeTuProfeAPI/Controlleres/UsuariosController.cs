@@ -124,14 +124,14 @@ namespace EligeTuProfeAPI.Controlleres
             var userOut = _context.Usuarios.Where(u => u.Correo == login.Correo && u.UserPassword == login.UserPassword).ToList();
             if (userOut == null || userOut.Count == 0)
             {
-                return Unauthorized();
+                return Unauthorized(new { Status = false, Message = "Correo o contraseña no válidos" });
             }
             var token = _jwtAuthenticationManager.Authenticate(userOut[0].Rut, userOut[0].UserPassword);
             if (token == null)
             {
-                return Unauthorized();
+                return Unauthorized(new { Status = false, Message = "Sesión expirada, debe volver a iniciar sesión." });
             }
-            return Ok(token);
+            return Ok(new { Status = true, Message = "Sesión iniciada correctamente", Token = token });
         }
     }
 }
