@@ -22,7 +22,7 @@ namespace EligeTuProfeAPI.Controlleres
             _context = context;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Carrera>>> GetCarreras()
         {

@@ -59,6 +59,18 @@ namespace EligeTuProfeAPI.Controlleres
 
             return comentario;
         }
+        // Demo Get: Comentarios por profesor/año/periodo->semestre
+        [HttpGet("{cod}/{id}/{year}/{periodo}")]
+        public async Task<ActionResult<IEnumerable<Comentario>>> GetComentarioProfesor2(int cod, int id, int year, int periodo)
+        {
+            if (_context.Comentarios == null)
+            {
+                return NotFound();
+            }
+            var comentarios = await _context.Comentarios.Where(c => c.CodigoAsignatura == cod && c.RutProfesor == id && c.Year == year && c.Periodo == periodo).ToListAsync();
+            return comentarios;
+        }
+       
 
         // PUT: api/Comentarios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
