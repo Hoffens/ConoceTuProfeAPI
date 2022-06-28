@@ -131,7 +131,7 @@ namespace EligeTuProfeAPI.Controlleres
             {
                 return Unauthorized(new { Status = false, Message = "Sesión expirada, debe volver a iniciar sesión." });
             }
-            return Ok(new { Status = true, Message = "Sesión iniciada correctamente", Token = token });
+            return Ok(new { Status = true, Message = "Sesión iniciada correctamente", Token = token, User = userOut[0] });
         }
     }
 }

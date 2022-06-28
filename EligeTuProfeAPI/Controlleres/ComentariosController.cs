@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EligeTuProfe.Data;
 using EligeTuProfe.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EligeTuProfeAPI.Controlleres
 {
@@ -59,6 +60,7 @@ namespace EligeTuProfeAPI.Controlleres
 
             return comentario;
         }
+        [Authorize]
         // Demo Get: Comentarios por profesor/año/periodo->semestre
         [HttpGet("{cod}/{id}/{year}/{periodo}")]
         public async Task<ActionResult<IEnumerable<Comentario>>> GetComentarioProfesor2(int cod, int id, int year, int periodo)

@@ -22,18 +22,18 @@ namespace EligeTuProfeAPI.Controlleres
             _context = context;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Carrera>>> GetCarreras()
+        public async Task<IActionResult> GetCarreras()
         {
           if (_context.Carreras == null)
           {
-              return NotFound();
+              return NotFound(new {Status = false, Message = "Carreras no encontradas."});
           }
             var carreras = await _context.Carreras.Where(c => c.Estado).ToListAsync();
-            var asignaturas = await _context.Carreras.Include(c => c.Asignaturas).ToListAsync();
-            var profesores = await _context.Asignaturas.Include(a => a.InscripcionProfesores).ToListAsync();
-            return carreras;
+            //var asignaturas = await _context.Carreras.Include(c => c.Asignaturas).ToListAsync();
+            //var profesores = await _context.Asignaturas.Include(a => a.InscripcionProfesores).ToListAsync();
+            return Ok(new { Status = true, Message = "Carreras obtenidas correctamente.", Carreras = carreras });
         }
 
         // GET: api/Carreras/5
