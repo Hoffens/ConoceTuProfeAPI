@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EligeTuProfe.Models
+namespace EligeTuProfeAPI.Models
 {
     public partial class Asignatura
     {
@@ -9,7 +9,7 @@ namespace EligeTuProfe.Models
         {
             Comentarios = new HashSet<Comentario>();
             InscripcionAlumnos = new HashSet<InscripcionAlumno>();
-            InscripcionProfesores = new HashSet<InscripcionProfesor>();
+            InscripcionProfesors = new HashSet<InscripcionProfesor>();
         }
 
         public int Codigo { get; set; }
@@ -20,6 +20,6 @@ namespace EligeTuProfe.Models
         public virtual Carrera CodigoCarreraNavigation { get; set; } = null!;
         public virtual ICollection<Comentario> Comentarios { get; set; }
         public virtual ICollection<InscripcionAlumno> InscripcionAlumnos { get; set; }
-        public virtual ICollection<InscripcionProfesor> InscripcionProfesores { get; set; }
+        public virtual ICollection<InscripcionProfesor> InscripcionProfesors { get; set; }
     }
 }

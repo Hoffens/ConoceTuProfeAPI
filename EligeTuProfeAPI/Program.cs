@@ -1,4 +1,4 @@
-using EligeTuProfe.Data;
+using EligeTuProfeAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

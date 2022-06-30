@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EligeTuProfe.Data;
-using EligeTuProfe.Models;
+using EligeTuProfeAPI.Data;
+using EligeTuProfeAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using EligeTuProfeAPI.Models;
 
@@ -44,7 +44,7 @@ namespace EligeTuProfeAPI.Controlleres
               return NotFound();
           }
             var usuario = await _context.Usuarios.FindAsync(id);
-            await _context.Usuarios.Include(u => u.InscripcionAlumno).ToListAsync();
+            await _context.Usuarios.Include(u => u.InscripcionAlumnos).ToListAsync();
             await _context.Usuarios.Include(u => u.Comentarios).ToListAsync();
 
             if (usuario == null)

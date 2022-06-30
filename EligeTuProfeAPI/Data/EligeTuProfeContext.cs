@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using EligeTuProfe.Models;
+using EligeTuProfeAPI.Models;
 
-namespace EligeTuProfe.Data
+namespace EligeTuProfeAPI.Data
 {
     public partial class EligeTuProfeContext : DbContext
     {
@@ -92,32 +92,32 @@ namespace EligeTuProfe.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Comentario_ibfk_3");
 
-                entity.HasOne(d => d.RutProfesorNavigation)
-                    .WithMany(p => p.Comentarios)
-                    .HasForeignKey(d => d.RutProfesor)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Comentario_ibfk_2");
-
                 entity.HasOne(d => d.RutAlumnoNavigation)
                     .WithMany(p => p.Comentarios)
                     .HasForeignKey(d => d.RutAlumno)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Comentario_ibfk_1");
+
+                entity.HasOne(d => d.RutProfesorNavigation)
+                    .WithMany(p => p.Comentarios)
+                    .HasForeignKey(d => d.RutProfesor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Comentario_ibfk_2");
             });
 
             modelBuilder.Entity<InscripcionAlumno>(entity =>
             {
-                entity.HasKey(e => new { e.Rut, e.CodigoAsignatura })
+                entity.HasKey(e => new { e.Rut, e.CodigoAsignatura, e.Year, e.Periodo })
                     .HasName("PRIMARY")
-                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0, 0 });
 
                 entity.ToTable("InscripcionAlumno");
 
                 entity.HasIndex(e => e.CodigoAsignatura, "CodigoAsignatura");
 
-                entity.Property(e => e.Periodo).HasColumnName("periodo");
-
                 entity.Property(e => e.Year).HasColumnName("year");
+
+                entity.Property(e => e.Periodo).HasColumnName("periodo");
 
                 entity.HasOne(d => d.CodigoAsignaturaNavigation)
                     .WithMany(p => p.InscripcionAlumnos)
@@ -126,7 +126,7 @@ namespace EligeTuProfe.Data
                     .HasConstraintName("InscripcionAlumno_ibfk_2");
 
                 entity.HasOne(d => d.RutNavigation)
-                    .WithMany(p => p.InscripcionAlumno)
+                    .WithMany(p => p.InscripcionAlumnos)
                     .HasForeignKey(d => d.Rut)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("InscripcionAlumno_ibfk_1");
@@ -134,29 +134,29 @@ namespace EligeTuProfe.Data
 
             modelBuilder.Entity<InscripcionProfesor>(entity =>
             {
-                entity.HasKey(e => new { e.Rut, e.CodigoAsignatura })
+                entity.HasKey(e => new { e.Rut, e.CodigoAsignatura, e.Year, e.Periodo })
                     .HasName("PRIMARY")
-                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0, 0 });
 
                 entity.ToTable("InscripcionProfesor");
 
                 entity.HasIndex(e => e.CodigoAsignatura, "CodigoAsignatura");
 
-                entity.Property(e => e.Periodo).HasColumnName("periodo");
-
                 entity.Property(e => e.Year).HasColumnName("year");
 
+                entity.Property(e => e.Periodo).HasColumnName("periodo");
+
                 entity.HasOne(d => d.CodigoAsignaturaNavigation)
-                    .WithMany(p => p.InscripcionProfesores)
+                    .WithMany(p => p.InscripcionProfesors)
                     .HasForeignKey(d => d.CodigoAsignatura)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("InscripcionProfesor_ibfk_2");
+                    .HasConstraintName("InscripcionProfesor_ibfk_1");
 
                 entity.HasOne(d => d.RutNavigation)
-                    .WithMany(p => p.InscripcionProfesor)
+                    .WithMany(p => p.InscripcionProfesors)
                     .HasForeignKey(d => d.Rut)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("InscripcionProfesor_ibfk_1");
+                    .HasConstraintName("InscripcionProfesor_ibfk_2");
             });
 
             modelBuilder.Entity<Profesor>(entity =>

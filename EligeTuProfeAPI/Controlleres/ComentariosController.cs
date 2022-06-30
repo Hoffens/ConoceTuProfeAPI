@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EligeTuProfe.Data;
-using EligeTuProfe.Models;
+using EligeTuProfeAPI.Data;
+using EligeTuProfeAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace EligeTuProfeAPI.Controlleres

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EligeTuProfe.Models
+namespace EligeTuProfeAPI.Models
 {
     public partial class Comentario
     {

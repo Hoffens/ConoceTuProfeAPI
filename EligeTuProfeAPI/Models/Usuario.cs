@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EligeTuProfe.Models
+namespace EligeTuProfeAPI.Models
 {
     public partial class Usuario
     {
         public Usuario()
         {
-            InscripcionAlumno = new HashSet<InscripcionAlumno>();
+            Comentarios = new HashSet<Comentario>();
+            InscripcionAlumnos = new HashSet<InscripcionAlumno>();
         }
 
         public int Rut { get; set; }
@@ -20,8 +21,7 @@ namespace EligeTuProfe.Models
         public bool Estado { get; set; }
 
         public virtual Carrera? CodigoCarreraNavigation { get; set; }
-        public virtual ICollection<InscripcionAlumno> InscripcionAlumno { get; set; }
         public virtual ICollection<Comentario> Comentarios { get; set; }
-
+        public virtual ICollection<InscripcionAlumno> InscripcionAlumnos { get; set; }
     }
 }

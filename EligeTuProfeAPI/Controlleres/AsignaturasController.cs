@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EligeTuProfe.Data;
-using EligeTuProfe.Models;
+using EligeTuProfeAPI.Data;
+using EligeTuProfeAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EligeTuProfeAPI.Controlleres
 {
@@ -22,14 +23,28 @@ namespace EligeTuProfeAPI.Controlleres
         }
 
         // GET: api/Asignaturas/carrera/id
+        [Authorize]
         [HttpGet("carrera/{id}")]
-        public async Task<ActionResult<IEnumerable<Asignatura>>> GetAsignaturasCarrera(int id)
+        public async Task<IActionResult> GetAsignaturasCarrera(int id)
         {
           if (_context.Asignaturas == null)
           {
-              return NotFound();
+              return NotFound(new { Status = false, Message = "Carrera no posee asignaturas." });
           }
-          return await _context.Asignaturas.Where(a => a.Estado && a.CodigoCarrera == id).ToListAsync();
+          var asignaturas = await _context.Asignaturas.Where(a => a.Estado && a.CodigoCarrera == id).ToListAsync();
+          return Ok(new { Status = true, Message = "Asignaturas obtenidas correctamente.", Asignaturas = asignaturas });
+        }
+
+        [Authorize]
+        [HttpGet("profesores/{id}")]
+        public async Task<IActionResult> GetProfesoresAsignatura(int id)
+        {
+            if (_context.Asignaturas == null)
+            {
+                return NotFound(new { Status = false, Message = "Carrera no posee asignaturas." });
+            }
+            var asignaturas = await _context.Asignaturas.Where(a => a.Estado && a.CodigoCarrera == id).ToListAsync();
+            return Ok(new { Status = true, Message = "Asignaturas obtenidas correctamente.", Asignaturas = asignaturas });
         }
 
         // GET: api/Asignaturas/5
@@ -77,7 +92,6 @@ namespace EligeTuProfeAPI.Controlleres
                     throw;
                 }
             }
-
             return NoContent();
         }
 
