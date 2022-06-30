@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using EligeTuProfeAPI;
+using Newtonsoft;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,7 @@ options =>
     Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.29-mysql"));
 });
 
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

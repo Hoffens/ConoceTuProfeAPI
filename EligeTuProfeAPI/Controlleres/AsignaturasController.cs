@@ -43,8 +43,16 @@ namespace EligeTuProfeAPI.Controlleres
             {
                 return NotFound(new { Status = false, Message = "Carrera no posee asignaturas." });
             }
-            var asignaturas = await _context.Asignaturas.Where(a => a.Estado && a.CodigoCarrera == id).ToListAsync();
-            return Ok(new { Status = true, Message = "Asignaturas obtenidas correctamente.", Asignaturas = asignaturas });
+            var profesores = await (from profesor in _context.Profesors join inscripcion in _context.InscripcionProfesors on 
+                              profesor.Rut equals inscripcion.Rut where inscripcion.CodigoAsignatura == id
+                              select new
+                              {
+                                  profesor = profesor,
+                                  inscripcion = inscripcion
+                              }).ToListAsync();
+
+            //var asignaturas = await _context.Asignaturas.Where(a => a.Estado && a.CodigoCarrera == id).ToListAsync();
+            return Ok(new { Status = true, Message = "Profesores obtenidos correctamente.", Profesores = profesores });
         }
 
         // GET: api/Asignaturas/5

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EligeTuProfeAPI.Data;
 using EligeTuProfeAPI.Models;
 using Microsoft.AspNetCore.Authorization;
-using EligeTuProfeAPI.Models;
+using Newtonsoft.Json.Linq;
 
 namespace EligeTuProfeAPI.Controlleres
 {
@@ -119,9 +119,11 @@ namespace EligeTuProfeAPI.Controlleres
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] Login login)
+        public IActionResult Login([FromBody] JObject login)
         {
-            var userOut = _context.Usuarios.Where(u => u.Correo == login.Correo && u.UserPassword == login.UserPassword).ToList();
+            var correo = login["correo"].ToString();
+            var password = login["userPassword"].ToString();
+            var userOut = _context.Usuarios.Where(u => u.Correo == correo && u.UserPassword == password).ToList();
             if (userOut == null || userOut.Count == 0)
             {
                 return Unauthorized(new { Status = false, Message = "Correo o contraseña no válidos" });
